@@ -51,8 +51,25 @@ public class mysketch extends PApplet{
             image(bg,0,0,width,height);
             text("Click Start or press Enter to begin!",250,100);
             startButton.draw();
-        
-        } else if (stage ==1){
+        } else if (stage==1){
+            image(bg2,0,0,width,height);
+            Quyuan.draw();
+            if (keyPressed){
+                if (keyCode == LEFT){
+                    Quyuan.move(-2,0);
+                } else if (keyCode == RIGHT){
+                    Quyuan.move(2,0);
+                } else if (keyCode == UP){
+                    Quyuan.move(0,-2);
+                } else if (keyCode == DOWN){
+                    Quyuan.move(0,2);
+                }
+            }
+            drawCollisions();
+            //---------------------------------------------
+            testblock.draw();
+            
+        } else if (stage ==2){
             image(bg1,0,0,width,height);
             npc1.draw();
             Quyuan.draw();
@@ -79,13 +96,10 @@ public class mysketch extends PApplet{
             
             //---------------------------------------------
             testblock.draw();
-        // end stage 1
-        } else if (stage==2){
-            image(bg2,0,0,width,height);
-            
-        }
+        }// end stage 2
+
     } //end draw   
-    
+   
     
     public void mousePressed(){
         if (stage ==0){
@@ -93,7 +107,7 @@ public class mysketch extends PApplet{
                 stage = 1;
             }
         }
-        if (stage ==1){
+        if (stage ==2){
             if (Quyuan.isClicked(mouseX, mouseY)){
                 showInfo= !showInfo;
                 System.out.println(showInfo);
@@ -109,13 +123,15 @@ public class mysketch extends PApplet{
     
     public void drawCollisions(){
         if(stage ==1){
+            if (Quyuan.isCollidingWith(testblock)){
+                stageincrease();
+            }
+        }//close if stage
+        if(stage ==2){
             if (Quyuan.isCollidingWith(npc1)){
                 fill(255);
                 this.text("Hi!", Quyuan.x-5, Quyuan.y+5);
             }//close if
-            if (Quyuan.isCollidingWith(testblock)){
-                stageincrease();
-            }
         }//close if stage
     }
     
