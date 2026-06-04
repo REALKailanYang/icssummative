@@ -86,7 +86,7 @@ public class Person {
   }
 
     public void displayInfo(PApplet p){
-         app.fill(0);
+         app.fill(255);
          app.text("name: "+ name, x, y-10);
     }
     

@@ -15,11 +15,13 @@ import processing.core.PImage;
 public class mysketch extends PApplet{
     private Person Quyuan;
     private Person npc1;
+    //---------------------------------------------
+    private Person testblock;
     int stage = 0;
     //interact npcs
     private boolean showInfo,showInfo1 = false; // make one for each npc
     private Button startButton;
-    private PImage bg,bg1;
+    private PImage bg,bg1,bg2;
     
     public void settings(){
         //window size
@@ -35,6 +37,10 @@ public class mysketch extends PApplet{
         startButton = new Button (this,330,120,"images/startbutton1.png");
         bg= loadImage("images/menu.png");
         bg1= loadImage("images/village1.jpg");
+        bg2 = loadImage("images/water.png");
+        //PApplet p, int x, int y, int speed, String imagePath
+        //------------------------------------------------
+        testblock = new Person (this, 30, 550, 0, "images/testblock.png");
     }
 
     public void draw(){
@@ -45,6 +51,7 @@ public class mysketch extends PApplet{
             image(bg,0,0,width,height);
             text("Click Start or press Enter to begin!",250,100);
             startButton.draw();
+        
         } else if (stage ==1){
             image(bg1,0,0,width,height);
             npc1.draw();
@@ -69,8 +76,14 @@ public class mysketch extends PApplet{
             if (showInfo1){
                 npc1.displayInfo(this);
             }
-       
-        } //close else if
+            
+            //---------------------------------------------
+            testblock.draw();
+        // end stage 1
+        } else if (stage==2){
+            image(bg2,0,0,width,height);
+            
+        }
     } //end draw   
     
     
@@ -95,10 +108,19 @@ public class mysketch extends PApplet{
     }
     
     public void drawCollisions(){
-         if (Quyuan.isCollidingWith(npc1)){
-            fill(255);
-            this.text("Hi!", Quyuan.x-5, Quyuan.y+5);
-        }//close if
+        if(stage ==1){
+            if (Quyuan.isCollidingWith(npc1)){
+                fill(255);
+                this.text("Hi!", Quyuan.x-5, Quyuan.y+5);
+            }//close if
+            if (Quyuan.isCollidingWith(testblock)){
+                stageincrease();
+            }
+        }//close if stage
+    }
+    
+    public void stageincrease(){
+        stage +=1;
     }
     
     public void keyPressed(){
