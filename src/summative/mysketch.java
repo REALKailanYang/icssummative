@@ -13,7 +13,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class mysketch extends PApplet{
-    private Person Quyuan;
+    public Person Quyuan;
     private Person npc1;
     //---------------------------------------------
     private Person testblock;
@@ -22,6 +22,10 @@ public class mysketch extends PApplet{
     private boolean showInfo,showInfo1 = false; // make one for each npc
     private Button startButton;
     private PImage bg,bg1,bg2;
+    
+    //ohter things
+    private int a = 506; //x value of Quyuan
+    //private int speed;
     
     public void settings(){
         //window size
@@ -32,7 +36,7 @@ public class mysketch extends PApplet{
         //set background color
         background (252,246,217);
         textSize(25);
-        Quyuan = new Person(this,450,300,"QuYuan",2,"images/biggerQuyuan.png");
+        Quyuan = new Person(this,506,223,"QuYuan",2,"images/biggerQuyuan.png");
         npc1 = new Person (this,200,330,"npc",0,"images/npc1.png");
         startButton = new Button (this,330,120,"images/startbutton1.png");
         bg= loadImage("images/menu.png");
@@ -40,7 +44,7 @@ public class mysketch extends PApplet{
         bg2 = loadImage("images/water.png");
         //PApplet p, int x, int y, int speed, String imagePath
         //------------------------------------------------
-        testblock = new Person (this, 30, 550, 0, "images/testblock.png");
+        testblock = new Person (this, 368, 385, 0, "images/testblock.png");
     }
 
     public void draw(){
@@ -54,17 +58,23 @@ public class mysketch extends PApplet{
         } else if (stage==1){
             image(bg2,0,0,width,height);
             Quyuan.draw();
-            if (keyPressed){
-                if (keyCode == LEFT){
-                    Quyuan.move(-2,0);
-                } else if (keyCode == RIGHT){
-                    Quyuan.move(2,0);
-                } else if (keyCode == UP){
-                    Quyuan.move(0,-2);
-                } else if (keyCode == DOWN){
-                    Quyuan.move(0,2);
-                }
+            if (Quyuan.x >= 369){
+                Quyuan.move(-1, -1);
+            } else {
+                Quyuan.move(0,2); // consider drawing him upside down for this part
             }
+            //Quyuan.moveTo(30, 550);
+//            if (keyPressed){
+//                if (keyCode == LEFT){
+//                    Quyuan.move(-2,0);
+//                } else if (keyCode == RIGHT){
+//                    Quyuan.move(2,0);
+//                } else if (keyCode == UP){
+//                    Quyuan.move(0,-2);
+//                } else if (keyCode == DOWN){
+//                    Quyuan.move(0,2);
+//                }
+//            }
             drawCollisions();
             //---------------------------------------------
             testblock.draw();
@@ -73,6 +83,7 @@ public class mysketch extends PApplet{
             image(bg1,0,0,width,height);
             npc1.draw();
             Quyuan.draw();
+            
             if (keyPressed){
                 if (keyCode == LEFT){
                     Quyuan.move(-2,0);
@@ -95,13 +106,14 @@ public class mysketch extends PApplet{
             }
             
             //---------------------------------------------
-            testblock.draw();
+            //testblock.draw();
         }// end stage 2
 
     } //end draw   
    
     
     public void mousePressed(){
+        System.out.println("x: " + mouseX + "y: " + mouseY);
         if (stage ==0){
             if (startButton.isClicked(mouseX, mouseY)){
                 stage = 1;
@@ -128,6 +140,7 @@ public class mysketch extends PApplet{
             }
         }//close if stage
         if(stage ==2){
+
             if (Quyuan.isCollidingWith(npc1)){
                 fill(255);
                 this.text("Hi!", Quyuan.x-5, Quyuan.y+5);
