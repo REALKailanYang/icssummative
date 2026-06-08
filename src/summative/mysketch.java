@@ -13,8 +13,8 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class mysketch extends PApplet{
-    public Person Quyuan;
-    private Person npc1;
+    public Person Quyuan,mc;
+    public Person npc1,npc2,npc3,cat;
     //---------------------------------------------
     private Person testblock;
     int stage = 0;
@@ -22,9 +22,8 @@ public class mysketch extends PApplet{
     private boolean showInfo,showInfo1 = false; // make one for each npc
     private Button startButton;
     private PImage bg,bg1,bg2;
+    public boolean talktocat = false;
     
-    //ohter things
-    private int a = 506; //x value of Quyuan
     //private int speed;
     
     public void settings(){
@@ -36,8 +35,12 @@ public class mysketch extends PApplet{
         //set background color
         background (252,246,217);
         textSize(25);
+        mc = new Person(this,220,400, "you",3,"images/mc1.png");
         Quyuan = new Person(this,506,223,"QuYuan",2,"images/biggerQuyuan.png");
-        npc1 = new Person (this,200,330,"npc",0,"images/npc1.png");
+        npc1 = new Person (this,200,330,"npc",1,"images/npc1.png");
+        npc2 = new Person(this,500,270,"npc",1,"images/npc2.png");
+        npc3 = new Person(this,700,450,"npc",1,"images/npc3.png");
+        cat = new Person(this,632,250,"cat",0,"images/cat.png");
         startButton = new Button (this,330,120,"images/startbutton1.png");
         bg= loadImage("images/menu.png");
         bg1= loadImage("images/village1.jpg");
@@ -57,10 +60,12 @@ public class mysketch extends PApplet{
             startButton.draw();
         } else if (stage==1){
             image(bg2,0,0,width,height);
+            fill(255);
+            text("Cutscene",50,50);
             Quyuan.draw();
             if (Quyuan.x >= 369){
                 Quyuan.move(-1, -1);
-            } else {
+            } else  {
                 Quyuan.move(0,2); // consider drawing him upside down for this part
             }
             //Quyuan.moveTo(30, 550);
@@ -81,32 +86,55 @@ public class mysketch extends PApplet{
             
         } else if (stage ==2){
             image(bg1,0,0,width,height);
+            fill(255);
+            if(npc3.x>0){
+                text("Cutscene",50,50);
+            }
             npc1.draw();
-            Quyuan.draw();
+            npc2.draw();
+            npc3.draw();
+            cat.draw();
+            mc.draw();
+            
+            npc1.move(-4,2);
+            npc2.move(-5,3);
+            npc3.move(-6,0);
+
+            
             
             if (keyPressed){
                 if (keyCode == LEFT){
-                    Quyuan.move(-2,0);
+                    mc.move(-2,0);
                 } else if (keyCode == RIGHT){
-                    Quyuan.move(2,0);
+                    mc.move(2,0);
                 } else if (keyCode == UP){
-                    Quyuan.move(0,-2);
+                    mc.move(0,-2);
                 } else if (keyCode == DOWN){
-                    Quyuan.move(0,2);
+                    mc.move(0,2);
                 }
             }
-        
+
+                        
             drawCollisions();
-            //person1.displayInfo(this);
-            if (showInfo){
-                Quyuan.displayInfo(this);
-            }
-            if (showInfo1){
-                npc1.displayInfo(this);
+            
+            if (talktocat== false && npc3.x<0){
+                text("Objective: ???",50,50);
+            } else if (talktocat==true) {
+                text("Objective: Follow the NPCS", 50,50);
             }
             
+            if (showInfo){
+                mc.displayInfo(this);
+            }
+            if (showInfo1){
+                cat.displayInfo(this);
+            }
+            
+
+                        
             //---------------------------------------------
             //testblock.draw();
+            
         }// end stage 2
 
     } //end draw   
@@ -120,12 +148,12 @@ public class mysketch extends PApplet{
             }
         }
         if (stage ==2){
-            if (Quyuan.isClicked(mouseX, mouseY)){
+            if (mc.isClicked(mouseX, mouseY)){
                 showInfo= !showInfo;
                 System.out.println(showInfo);
                 System.out.println("hit1");
             }
-            if (npc1.isClicked(mouseX, mouseY)){
+            if (cat.isClicked(mouseX, mouseY)){
                 showInfo1= !showInfo1;
                 System.out.println(showInfo1);
                 System.out.println("hit1");
@@ -140,11 +168,12 @@ public class mysketch extends PApplet{
             }
         }//close if stage
         if(stage ==2){
-
-            if (Quyuan.isCollidingWith(npc1)){
+            if (mc.isCollidingWith(cat)){
                 fill(255);
-                this.text("Hi!", Quyuan.x-5, Quyuan.y+5);
+                this.text("Meow meow meow!", cat.x-35, cat.y+5);
+                talktocat=true;
             }//close if
+
         }//close if stage
     }
     
