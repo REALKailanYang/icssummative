@@ -17,7 +17,7 @@ public class mysketch extends PApplet{
     public Person npc1,npc2,npc3,cat;
     //---------------------------------------------
     private Person testblock;
-    int stage = 0;
+    static int stage = 0;
     //interact npcs
     private boolean showInfo,showInfo1 = false; // make one for each npc
     private Button startButton;
@@ -68,18 +68,6 @@ public class mysketch extends PApplet{
             } else  {
                 Quyuan.move(0,2); // consider drawing him upside down for this part
             }
-            //Quyuan.moveTo(30, 550);
-//            if (keyPressed){
-//                if (keyCode == LEFT){
-//                    Quyuan.move(-2,0);
-//                } else if (keyCode == RIGHT){
-//                    Quyuan.move(2,0);
-//                } else if (keyCode == UP){
-//                    Quyuan.move(0,-2);
-//                } else if (keyCode == DOWN){
-//                    Quyuan.move(0,2);
-//                }
-//            }
             drawCollisions();
             //---------------------------------------------
             testblock.draw();
@@ -95,12 +83,13 @@ public class mysketch extends PApplet{
             npc3.draw();
             cat.draw();
             mc.draw();
+            testblock.draw();
             
+            testblock.moveTo(25,550);
             npc1.move(-4,2);
             npc2.move(-5,3);
             npc3.move(-6,0);
 
-            
             
             if (keyPressed){
                 if (keyCode == LEFT){
@@ -136,6 +125,25 @@ public class mysketch extends PApplet{
             //testblock.draw();
             
         }// end stage 2
+        else if (stage ==3){
+            image(bg2,0,0,width,height);
+            mc.draw();
+            
+            
+            if (keyPressed){
+                if (keyCode == LEFT){
+                    mc.move(-2,0);
+                } else if (keyCode == RIGHT){
+                    mc.move(2,0);
+                } else if (keyCode == UP){
+                    mc.move(0,-2);
+                } else if (keyCode == DOWN){
+                    mc.move(0,2);
+                }
+            }     
+            
+ 
+        }
 
     } //end draw   
    
@@ -147,7 +155,7 @@ public class mysketch extends PApplet{
                 stage = 1;
             }
         }
-        if (stage ==2){
+        else if (stage ==2){
             if (mc.isClicked(mouseX, mouseY)){
                 showInfo= !showInfo;
                 System.out.println(showInfo);
@@ -167,12 +175,17 @@ public class mysketch extends PApplet{
                 stageincrease();
             }
         }//close if stage
-        if(stage ==2){
+        else if(stage ==2){
             if (mc.isCollidingWith(cat)){
                 fill(255);
                 this.text("Meow meow meow!", cat.x-35, cat.y+5);
                 talktocat=true;
-            }//close if
+            } else if (mc.isCollidingWith(testblock)){
+                stageincrease();
+                mc.x=687;
+                mc.y=436;
+            }
+            
 
         }//close if stage
     }
