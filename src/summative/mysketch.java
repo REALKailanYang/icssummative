@@ -20,9 +20,9 @@ public class mysketch extends PApplet{
     static int stage = 0;
     //interact npcs
     private boolean showInfo,showInfo1 = false; // make one for each npc
-    private Button startButton;
+    private Button startButton, startzhongzi, laterzhongzi;
     private PImage bg,bg1,bg2;
-    public boolean talktocat = false;
+    public boolean talktocat, talktocat2, zhongzistart = false;
     
     //private int speed;
     
@@ -42,6 +42,8 @@ public class mysketch extends PApplet{
         npc3 = new Person(this,700,450,"npc",1,"images/npc3.png");
         cat = new Person(this,632,250,"cat",0,"images/cat.png");
         startButton = new Button (this,330,120,"images/startbutton1.png");
+        startzhongzi = new Button (this,12,437,"images/startzhongzi.png");
+        laterzhongzi = new Button (this,163,437,"images/zhongzilater.png");
         bg= loadImage("images/menu.png");
         bg1= loadImage("images/village1.jpg");
         bg2 = loadImage("images/water.png");
@@ -90,20 +92,8 @@ public class mysketch extends PApplet{
             npc2.move(-5,3);
             npc3.move(-6,0);
 
+            mcmovement();
             
-            if (keyPressed){
-                if (keyCode == LEFT){
-                    mc.move(-2,0);
-                } else if (keyCode == RIGHT){
-                    mc.move(2,0);
-                } else if (keyCode == UP){
-                    mc.move(0,-2);
-                } else if (keyCode == DOWN){
-                    mc.move(0,2);
-                }
-            }
-
-                        
             drawCollisions();
             
             if (talktocat== false && npc3.x<0){
@@ -127,26 +117,44 @@ public class mysketch extends PApplet{
         }// end stage 2
         else if (stage ==3){
             image(bg2,0,0,width,height);
+
+            npc1.draw();
+            npc2.draw();
+            npc3.draw();
+            cat.draw();
             mc.draw();
             
+            npc1.moveTo(53,184);
+            npc2.moveTo(413, 130);
+            npc3.moveTo(693, 255);
+            cat.moveTo(79, 428);
+                
+            mcmovement();
             
-            if (keyPressed){
-                if (keyCode == LEFT){
-                    mc.move(-2,0);
-                } else if (keyCode == RIGHT){
-                    mc.move(2,0);
-                } else if (keyCode == UP){
-                    mc.move(0,-2);
-                } else if (keyCode == DOWN){
-                    mc.move(0,2);
-                }
-            }     
+            drawCollisions();
             
+            if (talktocat2 == true){
+                startzhongzi.draw();
+                laterzhongzi.draw();
+            }
  
         }
 
     } //end draw   
-   
+    
+    public void mcmovement(){
+        if (keyPressed){
+            if (keyCode == LEFT){
+                mc.move(-2,0);
+            } else if (keyCode == RIGHT){
+                mc.move(2,0);
+            } else if (keyCode == UP){
+                mc.move(0,-2);
+            } else if (keyCode == DOWN){
+                mc.move(0,2);
+            }
+        }  
+    }
     
     public void mousePressed(){
         System.out.println("x: " + mouseX + "y: " + mouseY);
@@ -167,6 +175,17 @@ public class mysketch extends PApplet{
                 System.out.println("hit1");
             }
         }
+        else if (stage ==3){
+            if (talktocat2 == true){
+                if (startzhongzi.isClicked(mouseX, mouseY)){
+                    stageincrease();
+                }else if (laterzhongzi.isClicked(mouseX, mouseY)){
+                    mc.x = 687;
+                    mc.y = 436;
+                    talktocat2 = false;
+                }
+            }
+        }
     }
     
     public void drawCollisions(){
@@ -185,10 +204,30 @@ public class mysketch extends PApplet{
                 mc.x=687;
                 mc.y=436;
             }
-            
-
         }//close if stage
+        else if (stage ==3){
+            if (mc.isCollidingWith(cat)){
+                fill(0);
+                this.text("Meow (make zhongzi now?)",cat.x-40,cat.y+5);
+                talktocat2 = true;
+            }
+        }
     }
+    
+//    public boolean makezhongzi(){
+//        if (zhongzistart == false){
+//            fill(0);
+//            this.text("Meow (make zhongzi now?)",cat.x-40,cat.y+5);
+//            talktocat2 = true;
+//        } else{
+//            return true;
+//        }
+//        return false;
+//        
+//    }
+//    
+    
+    
     
     public void stageincrease(){
         stage +=1;
