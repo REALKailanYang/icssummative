@@ -27,7 +27,7 @@ public class mysketch extends PApplet{
     public boolean talktocat, talktocat2, zhongzistart = false;
     //make zhongzi
     //public makezhongzi leaf,leaf1,date,date1,rice,rice1,zhongzi,yarn;
-    public makezhongzi leaf,date,rice,zhongzi,yarn;
+    public makezhongzi leaf,date,rice,zhongzi,yarn,bigzhongzi;
     
     makezhongzi [] build = new makezhongzi[5];
     String [] story = {
@@ -69,6 +69,7 @@ public class mysketch extends PApplet{
         rice = new makezhongzi(this, 25, 25, "images/rice.png");  
         yarn = new makezhongzi(this, 5, 250, "images/yarn.png");
         zhongzi = new makezhongzi(this, 0,0, "images/small zhongzi.png");
+        bigzhongzi = new makezhongzi(this,0,0,"images/bigzhongzi.png");
         
         build[0] = new makezhongzi(this, 25,534, "images/cat.png"); //filler
         build[1] = new makezhongzi(this, 320, 50, "images/leaf1.png"); //leaf
@@ -201,10 +202,10 @@ public class mysketch extends PApplet{
             date.draw();
             rice.draw();
             yarn.draw();
-            build[4].draw();
+            bigzhongzi.draw();
             fill(0);
             this.text(cat.getDialogue(), cat.x+15, cat.y+5);
-            
+            text("Make more or continue story?", 217, 21);
         }
 
     } //end draw   
