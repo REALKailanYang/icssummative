@@ -19,12 +19,14 @@ public class mysketch extends PApplet{
     public CAT cat;
     //---------------------------------------------
     private Person testblock;
-    public static int stage = 0;
+    public static int stage,step = 0;
     //interact npcs
     private boolean showInfo,showInfo1 = false; // make one for each npc
     private Button startButton, startzhongzi, laterzhongzi;
-    private PImage bg,bg1,bg2;
+    private PImage bg,bg1,bg2, bg3;
     public boolean talktocat, talktocat2, zhongzistart = false;
+    //make zhongzi
+    public makezhongzi leaf,leaf1,date,date1,rice,rice1,zhongzi,yarn;
     
     //private int speed;
     
@@ -49,9 +51,22 @@ public class mysketch extends PApplet{
         bg= loadImage("images/menu.png");
         bg1= loadImage("images/village1.jpg");
         bg2 = loadImage("images/water.png");
+        bg3 = loadImage("images/table.png");
+        
+        //making zhongzi
+        leaf = new makezhongzi(this, 600 ,25,"images/leaf.png");
+        leaf1 = new makezhongzi(this, 350, 25, "images/leaf1.png");
+        rice1 = new makezhongzi(this, 440, 365, "images/rice1.png");
+        date = new makezhongzi(this, 57, 440, "images/red.png");
+        date1 = new makezhongzi(this, 510, 480, "images/red1.png");
+        rice = new makezhongzi(this, 25, 25, "images/rice.png");  
+        rice1 = new makezhongzi(this, 440, 365, "images/rice1.png");
+        yarn = new makezhongzi(this, 5, 250, "images/yarn.png");
+        zhongzi = new makezhongzi(this, 0, 0, "images/small zhongzi.png");
+        
         //PApplet p, int x, int y, int speed, String imagePath
         //------------------------------------------------
-        testblock = new Person (this, 368, 385, 0, "images/testblock.png");
+        testblock = new Person (this, 368, 385,"images/testblock.png");
     }
 
     public void draw(){
@@ -140,6 +155,22 @@ public class mysketch extends PApplet{
                 laterzhongzi.draw();
             }
  
+        } // end stage 3
+        else if (stage >=4){
+            image(bg3,0,0,width,height);
+            cat.draw();
+            leaf.draw();
+            date.draw();
+            rice.draw();
+            yarn.draw();
+            
+            cat.moveTo(25,534);
+            fill(0);
+            this.text(cat.getDialogue(), cat.x+15, cat.y+5);
+            
+            if (step == 1){
+                leaf1.draw();
+            }
         }
 
     } //end draw   
@@ -188,6 +219,14 @@ public class mysketch extends PApplet{
                 }
             }
         }
+        else if (stage >= 4){
+                if (step == 0 && leaf.isClicked(mouseX, mouseY)){
+                    stepincrease();
+                    stageincrease();
+                    System.out.print("step: " + step + " complete");
+                }
+
+        }
     }
     
     public void drawCollisions(){
@@ -218,31 +257,21 @@ public class mysketch extends PApplet{
         }
     }
     
-//    public boolean makezhongzi(){
-//        if (zhongzistart == false){
-//            fill(0);
-//            this.text("Meow (make zhongzi now?)",cat.x-40,cat.y+5);
-//            talktocat2 = true;
-//        } else{
-//            return true;
-//        }
-//        return false;
-//        
-//    }
-//    
-    
-    
+    public void stepincrease(){
+        step +=1;
+    }
     
     public void stageincrease(){
         stage +=1;
     }
     
     public void keyPressed(){
-        if (stage ==0){
-            if (keyCode == ENTER){
-            stage = 1;
-            }
-        }
+        //if (stage ==0){
+            if (keyCode == ENTER)
+            //stage = 1;
+                stageincrease();
+            //}
+        
     }
         
            

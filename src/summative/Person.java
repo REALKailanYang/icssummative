@@ -34,11 +34,10 @@ public class Person {
     this.height = image.height;
   }
   
-  public Person(PApplet p, int x, int y, int speed, String imagePath){ //might not use
+  public Person(PApplet p, int x, int y, String imagePath){ //might not use
     this.app = p;
     this.x = x;
     this.y = y;
-    this.speed = speed;
     this.image = app.loadImage(imagePath);
     this.width = image.width;
     this.height = image.height;

@@ -23,8 +23,10 @@ public class CAT extends Person {
     String [] cattalk = {
         " ", //stage 0;
         " ", //stage 1;
-        "Meow meow meow!", //stage 2;
-        "Meow (make zhongzi now?)" //stage 3;
+        "Meow meow meow!", //stage 2
+        "Meow (make zhongzi now?)", //stage 3;
+        "Meow (Let's start with the leaf)", //stage 4;
+        "Meoww (Rice next!)"   //stage 5
     };
     
     @Override
