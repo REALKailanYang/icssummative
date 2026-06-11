@@ -26,8 +26,11 @@ public class mysketch extends PApplet{
     private PImage bg,bg1,bg2, bg3;
     public boolean talktocat, talktocat2, zhongzistart = false;
     //make zhongzi
-    public makezhongzi leaf,leaf1,date,date1,rice,rice1,zhongzi,yarn;
+    //public makezhongzi leaf,leaf1,date,date1,rice,rice1,zhongzi,yarn;
+    public makezhongzi leaf,date,rice,zhongzi,yarn;
     
+    makezhongzi [] build = new makezhongzi[5];
+
     //private int speed;
     
     public void settings(){
@@ -55,18 +58,20 @@ public class mysketch extends PApplet{
         
         //making zhongzi
         leaf = new makezhongzi(this, 600 ,25,"images/leaf.png");
-        leaf1 = new makezhongzi(this, 350, 25, "images/leaf1.png");
-        rice1 = new makezhongzi(this, 440, 365, "images/rice1.png");
         date = new makezhongzi(this, 57, 440, "images/red.png");
-        date1 = new makezhongzi(this, 510, 480, "images/red1.png");
         rice = new makezhongzi(this, 25, 25, "images/rice.png");  
-        rice1 = new makezhongzi(this, 440, 365, "images/rice1.png");
         yarn = new makezhongzi(this, 5, 250, "images/yarn.png");
-        zhongzi = new makezhongzi(this, 0, 0, "images/small zhongzi.png");
+        zhongzi = new makezhongzi(this, 0,0, "images/small zhongzi.png");
         
+        build[0] = new makezhongzi(this, 25,534, "images/cat.png"); //filler
+        build[1] = new makezhongzi(this, 320, 50, "images/leaf1.png"); //leaf
+        build[2] = new makezhongzi(this, 335, 255, "images/rice1.png"); // rice
+        build[3] = new makezhongzi(this, 335, 255, "images/red1.png"); // date
+        build [4] = new makezhongzi(this, 0, 0, "images/small zhongzi.png"); //zhongzi        
         //PApplet p, int x, int y, int speed, String imagePath
         //------------------------------------------------
         testblock = new Person (this, 368, 385,"images/testblock.png");
+        
     }
 
     public void draw(){
@@ -156,7 +161,7 @@ public class mysketch extends PApplet{
             }
  
         } // end stage 3
-        else if (stage >=4){
+        else if (stage >=4 && stage < 8){
             image(bg3,0,0,width,height);
             cat.draw();
             leaf.draw();
@@ -168,9 +173,24 @@ public class mysketch extends PApplet{
             fill(0);
             this.text(cat.getDialogue(), cat.x+15, cat.y+5);
             
-            if (step == 1){
-                leaf1.draw();
+            for (int i = step; i <4; i++){
+                //build[step].draw();
+                for (int a = 0; a <= step; a++){
+                    build[a].draw();    
+                } 
             }
+        }
+        else if (stage == 8){
+            image(bg3,0,0,width,height);
+            cat.draw();
+            leaf.draw();
+            date.draw();
+            rice.draw();
+            yarn.draw();
+            build[4].draw();
+            fill(0);
+            this.text(cat.getDialogue(), cat.x+15, cat.y+5);
+            
         }
 
     } //end draw   
@@ -219,13 +239,27 @@ public class mysketch extends PApplet{
                 }
             }
         }
-        else if (stage >= 4){
+        else if (stage >= 4 && stage < 8){
                 if (step == 0 && leaf.isClicked(mouseX, mouseY)){
                     stepincrease();
                     stageincrease();
-                    System.out.print("step: " + step + " complete");
+                    System.out.println("step: " + step + " complete");
                 }
-
+                else if (step == 1 && rice.isClicked(mouseX, mouseY)){
+                    stepincrease();
+                    stageincrease();
+                    System.out.println("step: " + step + " complete");
+                }
+                else if (step == 2 && date.isClicked(mouseX, mouseY)){
+                    stepincrease();
+                    stageincrease();
+                    System.out.println("step: " + step + " complete");
+                }
+                else if (step == 3 && yarn.isClicked(mouseX,mouseY)){
+                    stepincrease();
+                    stageincrease();
+                    System.out.println("step: " + step + " complete");
+                }
         }
     }
     

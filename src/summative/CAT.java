@@ -26,7 +26,10 @@ public class CAT extends Person {
         "Meow meow meow!", //stage 2
         "Meow (make zhongzi now?)", //stage 3;
         "Meow (Let's start with the leaf)", //stage 4;
-        "Meoww (Rice next!)"   //stage 5
+        "Meoww (Rice next!)",   //stage 5
+        "Meow! (date? hehe)", // stage 6
+        "Meoow (Tie it together with string)", //stage 7
+        "MEOWWW~ (look at that zhongzi!) *drools*" //stage 8
     };
     
     @Override
