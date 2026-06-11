@@ -10,9 +10,9 @@ import processing.core.PApplet;
  *
  * @author 342799913
  */
-public class Quyuan extends Person{
-    
-    public Quyuan(PApplet p, int x, int y, String name, int speed, String imagePath) {
+public class NPC extends Person{
+
+    public NPC(PApplet p, int x, int y, String name, int speed, String imagePath) {
         super(p, x, y, name, speed, imagePath);
     }
 

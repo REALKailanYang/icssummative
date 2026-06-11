@@ -12,12 +12,14 @@ package summative;
 import processing.core.PApplet;
 import processing.core.PImage;
 
+
 public class mysketch extends PApplet{
     public Person Quyuan,mc;
-    public Person npc1,npc2,npc3,cat;
+    public Person npc1,npc2,npc3;
+    public CAT cat;
     //---------------------------------------------
     private Person testblock;
-    static int stage = 0;
+    public static int stage = 0;
     //interact npcs
     private boolean showInfo,showInfo1 = false; // make one for each npc
     private Button startButton, startzhongzi, laterzhongzi;
@@ -40,7 +42,7 @@ public class mysketch extends PApplet{
         npc1 = new Person (this,200,330,"npc",1,"images/npc1.png");
         npc2 = new Person(this,500,270,"npc",1,"images/npc2.png");
         npc3 = new Person(this,700,450,"npc",1,"images/npc3.png");
-        cat = new Person(this,632,250,"cat",0,"images/cat.png");
+        cat = new CAT(this,632,250,"cat",0,"images/cat.png");
         startButton = new Button (this,330,120,"images/startbutton1.png");
         startzhongzi = new Button (this,12,437,"images/startzhongzi.png");
         laterzhongzi = new Button (this,163,437,"images/zhongzilater.png");
@@ -197,7 +199,8 @@ public class mysketch extends PApplet{
         else if(stage ==2){
             if (mc.isCollidingWith(cat)){
                 fill(255);
-                this.text("Meow meow meow!", cat.x-35, cat.y+5);
+                //this.text("Meow meow meow!", cat.x-35, cat.y+5);
+                this.text(cat.getDialogue(), cat.x-35, cat.y+5);
                 talktocat=true;
             } else if (mc.isCollidingWith(testblock)){
                 stageincrease();
@@ -208,7 +211,8 @@ public class mysketch extends PApplet{
         else if (stage ==3){
             if (mc.isCollidingWith(cat)){
                 fill(0);
-                this.text("Meow (make zhongzi now?)",cat.x-40,cat.y+5);
+                //this.text("Meow (make zhongzi now?)",cat.x-40,cat.y+5);
+                this.text(cat.getDialogue(), cat.x-40, cat.y+5);
                 talktocat2 = true;
             }
         }

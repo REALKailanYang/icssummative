@@ -90,5 +90,8 @@ public class Person {
          app.text("name: "+ name, x, y-10);
     }
     
+    public String getDialogue() {
+        return "Error message!";
+    }
   
 }
