@@ -47,6 +47,6 @@ public class makezhongzi {
     
     // returns true if  mouse clicked is within 16px from the center of image
     // we use 16px because the image is 32px by 32px
-    return d < 16; 
+    return d < 50; 
   }
 }

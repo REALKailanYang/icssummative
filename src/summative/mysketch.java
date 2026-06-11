@@ -19,9 +19,9 @@ public class mysketch extends PApplet{
     public CAT cat;
     //---------------------------------------------
     private Person testblock;
-    public static int stage,step = 0;
+    public static int stage,step,story1 = 0;
     //interact npcs
-    private boolean showInfo,showInfo1 = false; // make one for each npc
+    private boolean showInfo,showInfo1,story2,talknpc1 = false; // make one for each npc
     private Button startButton, startzhongzi, laterzhongzi;
     private PImage bg,bg1,bg2, bg3;
     public boolean talktocat, talktocat2, zhongzistart = false;
@@ -30,7 +30,14 @@ public class mysketch extends PApplet{
     public makezhongzi leaf,date,rice,zhongzi,yarn;
     
     makezhongzi [] build = new makezhongzi[5];
-
+    String [] story = {
+        "Story line 1 ",
+        "Story line 2 ",
+        "Story line 3",
+        "Story line 4",
+        ""
+    };
+    
     //private int speed;
     
     public void settings(){
@@ -67,7 +74,9 @@ public class mysketch extends PApplet{
         build[1] = new makezhongzi(this, 320, 50, "images/leaf1.png"); //leaf
         build[2] = new makezhongzi(this, 335, 255, "images/rice1.png"); // rice
         build[3] = new makezhongzi(this, 335, 255, "images/red1.png"); // date
-        build [4] = new makezhongzi(this, 0, 0, "images/small zhongzi.png"); //zhongzi        
+        build [4] = new makezhongzi(this, 0, 0, "images/small zhongzi.png"); //zhongzi    
+        
+
         //PApplet p, int x, int y, int speed, String imagePath
         //------------------------------------------------
         testblock = new Person (this, 368, 385,"images/testblock.png");
@@ -158,6 +167,11 @@ public class mysketch extends PApplet{
             if (talktocat2 == true){
                 startzhongzi.draw();
                 laterzhongzi.draw();
+            }
+            
+            if (talknpc1 == true){
+                this.text(story[story1],npc1.x-25,npc1.y+5);
+                this.text(" ",mc.x-25,mc.y+5);
             }
  
         } // end stage 3
@@ -287,7 +301,17 @@ public class mysketch extends PApplet{
                 //this.text("Meow (make zhongzi now?)",cat.x-40,cat.y+5);
                 this.text(cat.getDialogue(), cat.x-40, cat.y+5);
                 talktocat2 = true;
+            } else if (mc.isCollidingWith(npc3)){
+                fill(0);
+                this.text("Eeek!", npc3.x-25, npc3.y+5);
+            } else if (mc.isCollidingWith(npc2)){
+                fill(0);
+                this.text("NOOOOOOOOO!", npc2.x-25, npc2.y+5);
+            } else if (mc.isCollidingWith(npc1)){
+                story2 = true;
+                this.text("What's going on? (press Enter)", mc.x-15, mc.y+5);
             }
+            
         }
     }
     
@@ -300,11 +324,15 @@ public class mysketch extends PApplet{
     }
     
     public void keyPressed(){
-        //if (stage ==0){
-            if (keyCode == ENTER)
-            //stage = 1;
-                stageincrease();
-            //}
+        if (keyCode == ENTER && stage ==0)
+            stageincrease();
+        if (stage == 3 && story2 == true){
+            if (key == ENTER) {
+                    talknpc1= true;
+                    if (story1 < 4)
+                        story1++;  
+            }
+        }    
         
     }
         
