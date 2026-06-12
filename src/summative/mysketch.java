@@ -22,7 +22,8 @@ public class mysketch extends PApplet{
     public static int stage,step,story1 = 0;
     private static int loopcount = 1;
     //interact npcs
-    private boolean showInfo,showInfo1,story2,talknpc1 = false; // make one for each npc
+    private boolean showInfo,showInfo1, showInfoNPC1, showInfoNPC2,
+            showInfoNPC3, story2,talknpc1 = false; // make one for each npc
     private Button startButton, startzhongzi, laterzhongzi,later,proceed,throwzhongzi;
     private PImage bg,bg1,bg2, bg3;
     public boolean talktocat, talktocat2, zhongzistart = false;
@@ -50,7 +51,7 @@ public class mysketch extends PApplet{
         //set background color
         background (252,246,217);
         textSize(25);
-        mc = new Person(this,220,400, "you",3,"images/mc1.png");
+        mc = new Person(this,220,400, "you",5,"images/mc1.png");
         Quyuan = new Person(this,506,223,"QuYuan",2,"images/biggerQuyuan.png");
         npc1 = new Person (this,200,330,"npc",1,"images/npc1.png");
         npc2 = new Person(this,500,270,"npc",1,"images/npc2.png");
@@ -73,7 +74,7 @@ public class mysketch extends PApplet{
         rice = new makezhongzi(this, 25, 25, "images/rice.png");  
         yarn = new makezhongzi(this, 5, 250, "images/yarn.png");
         zhongzi = new makezhongzi(this, 0,0, "images/small zhongzi.png");
-        bigzhongzi = new makezhongzi(this,0,0,"images/bigzhongzi.png");
+        bigzhongzi = new makezhongzi(this,0,60,"images/bigzhongzi.png");
         
         build[0] = new makezhongzi(this, 25,534, "images/cat.png"); //filler
         build[1] = new makezhongzi(this, 320, 50, "images/leaf1.png"); //leaf
@@ -136,20 +137,9 @@ public class mysketch extends PApplet{
                 text("Objective: ???",50,50);
             } else if (talktocat==true) {
                 text("Objective: Follow the NPCS", 50,50);
-            }
-            
-            if (showInfo){
-                mc.displayInfo(this);
-            }
-            if (showInfo1){
-                cat.displayInfo(this);
-            }
-            
-
-                        
+            }    
             //---------------------------------------------
             //testblock.draw();
-            
         }// end stage 2
         else if (stage ==3){
             image(bg2,0,0,width,height);
@@ -217,12 +207,41 @@ public class mysketch extends PApplet{
             image(bg2,0,0,width,height);
             cat.draw();
             mc.draw();
-            
+                        
             cat.moveTo(437, 259);
             mcmovement();
             
-           
+            drawCollisions();
             throwzhongzi.draw();
+        } //end stage 9
+        else if (stage ==10){
+            image(bg2,0,0,width,height);
+            cat.draw();
+            mc.draw();
+            npc1.draw();
+            npc2.draw();
+            npc3.draw();
+            
+            mcmovement();
+            
+            npc1.moveTo(648,365);
+            drawCollisions();
+        }           
+        
+        if (showInfo){
+            mc.displayInfo(this);
+        }
+        if (showInfo1){
+            cat.displayInfo(this);
+        }
+        if(showInfoNPC1){
+            npc1.displayInfo(this);
+        }
+        if(showInfoNPC2){
+            npc2.displayInfo(this);
+        }
+        if(showInfoNPC3){
+            npc3.displayInfo(this);
         }
         //System.out.println(stage);
     } //end draw   
@@ -241,6 +260,43 @@ public class mysketch extends PApplet{
         }  
     }
     
+    public void mcdisplayinfo(){
+        if (mc.isClicked(mouseX, mouseY)){
+                showInfo= !showInfo;
+                System.out.println(showInfo);
+                System.out.println("hitmc");
+            }
+    }
+    public void catdisplayinfo(){
+        if (cat.isClicked(mouseX, mouseY)){
+            showInfo1= !showInfo1;
+            System.out.println(showInfo1);
+            System.out.println("hitcat");
+        }
+    }
+
+    public void NPC1displayinfo(){
+        if (npc1.isClicked(mouseX, mouseY)){
+            showInfoNPC1= !showInfoNPC1;
+            System.out.println(showInfoNPC1);
+            System.out.println("hit npc1");
+        }
+    }
+    public void NPC2displayinfo(){
+        if (npc2.isClicked(mouseX, mouseY)){
+            showInfoNPC2= !showInfoNPC2;
+            System.out.println(showInfoNPC2);
+            System.out.println("hit npc2");
+        }
+    }
+    public void NPC3displayinfo(){
+        if (npc3.isClicked(mouseX, mouseY)){
+            showInfoNPC3= !showInfoNPC3;
+            System.out.println(showInfoNPC3);
+            System.out.println("hit npc3");
+        }
+    }
+    
     public void mousePressed(){
         System.out.println("x: " + mouseX + "y: " + mouseY);
         if (stage ==0){
@@ -249,18 +305,15 @@ public class mysketch extends PApplet{
             }
         }
         else if (stage ==2){
-            if (mc.isClicked(mouseX, mouseY)){
-                showInfo= !showInfo;
-                System.out.println(showInfo);
-                System.out.println("hit1");
-            }
-            if (cat.isClicked(mouseX, mouseY)){
-                showInfo1= !showInfo1;
-                System.out.println(showInfo1);
-                System.out.println("hit1");
-            }
+            catdisplayinfo();
+            mcdisplayinfo();
         }
         else if (stage ==3){
+            catdisplayinfo();
+            mcdisplayinfo();
+            NPC1displayinfo();
+            NPC2displayinfo();
+            NPC3displayinfo();
             if (talktocat2 == true){
                 if (startzhongzi.isClicked(mouseX, mouseY)){
                     stageincrease();
@@ -304,6 +357,20 @@ public class mysketch extends PApplet{
                 loopcount +=1;
                 System.out.println(loopcount);
             }
+        }
+        else if (stage == 9){
+            catdisplayinfo();
+            mcdisplayinfo();
+            if (throwzhongzi.isClicked(mouseX, mouseY)){
+                stageincrease();
+            }
+        }
+        else if (stage == 10){
+            catdisplayinfo();
+            mcdisplayinfo();
+            NPC1displayinfo();
+            NPC2displayinfo();
+            NPC3displayinfo();
         }
     }
     
@@ -358,6 +425,11 @@ public class mysketch extends PApplet{
     
     public void stageincrease(){
         stage +=1;
+        showInfo = false;
+        showInfo1 = false;
+        showInfoNPC1 = false;
+        showInfoNPC2 = false;
+        showInfoNPC3 = false;
     }
     
     public void keyPressed(){

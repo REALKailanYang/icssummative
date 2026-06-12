@@ -17,6 +17,7 @@ import processing.core.PImage;
  */
 public class Person {
   public int x,y;
+  public boolean showInfo;
   private String name; // name of the person
   private int speed; 
   private PImage image;
@@ -32,6 +33,7 @@ public class Person {
     this.image = app.loadImage(imagePath);
     this.width = image.width;
     this.height = image.height;
+    //this.showInfo = false;
   }
   
   public Person(PApplet p, int x, int y, String imagePath){ //might not use
