@@ -20,9 +20,10 @@ public class mysketch extends PApplet{
     //---------------------------------------------
     private Person testblock;
     public static int stage,step,story1 = 0;
+    private static int loopcount = 1;
     //interact npcs
     private boolean showInfo,showInfo1,story2,talknpc1 = false; // make one for each npc
-    private Button startButton, startzhongzi, laterzhongzi;
+    private Button startButton, startzhongzi, laterzhongzi,later,proceed,throwzhongzi;
     private PImage bg,bg1,bg2, bg3;
     public boolean talktocat, talktocat2, zhongzistart = false;
     //make zhongzi
@@ -58,6 +59,9 @@ public class mysketch extends PApplet{
         startButton = new Button (this,330,120,"images/startbutton1.png");
         startzhongzi = new Button (this,12,437,"images/startzhongzi.png");
         laterzhongzi = new Button (this,163,437,"images/zhongzilater.png");
+        later = new Button (this, 441, 70, "images/later.png");
+        proceed = new Button (this, 220, 70, "images/proceed.png");
+        throwzhongzi = new Button (this, 600,150, "images/throwzhongzi.png");
         bg= loadImage("images/menu.png");
         bg1= loadImage("images/village1.jpg");
         bg2 = loadImage("images/water.png");
@@ -203,11 +207,24 @@ public class mysketch extends PApplet{
             rice.draw();
             yarn.draw();
             bigzhongzi.draw();
+            later.draw();
+            proceed.draw();
             fill(0);
             this.text(cat.getDialogue(), cat.x+15, cat.y+5);
-            text("Make more or continue story?", 217, 21);
+            text("Make more or continue story?", 217, 30);
         }
-
+        else if (stage == 9){
+            image(bg2,0,0,width,height);
+            cat.draw();
+            mc.draw();
+            
+            cat.moveTo(437, 259);
+            mcmovement();
+            
+           
+            throwzhongzi.draw();
+        }
+        //System.out.println(stage);
     } //end draw   
     
     public void mcmovement(){
@@ -276,6 +293,18 @@ public class mysketch extends PApplet{
                     System.out.println("step: " + step + " complete");
                 }
         }
+        else if (stage == 8){
+            if (proceed.isClicked(mouseX,mouseY)){
+                stageincrease();
+                mc.x=578;
+                mc.y=239;
+            } else if (later.isClicked(mouseX,mouseY)){
+                stage = 4;
+                step = 0;
+                loopcount +=1;
+                System.out.println(loopcount);
+            }
+        }
     }
     
     public void drawCollisions(){
@@ -313,6 +342,13 @@ public class mysketch extends PApplet{
                 this.text("What's going on? (press Enter)", mc.x-15, mc.y+5);
             }
             
+        }
+        else if (stage ==9){
+            if (mc.isCollidingWith(cat)){
+                fill(255);
+                this.text(cat.getDialogue(), cat.x-25, cat.y+5);
+                System.out.println("collided!");
+            }
         }
     }
     
