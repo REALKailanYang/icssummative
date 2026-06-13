@@ -17,6 +17,7 @@ public class makezhongzi {
   private PImage image;
   private PApplet app;
   private int width,height;
+  //private int speed = 2;
   
   public makezhongzi (PApplet p, int x, int y, String imagePath){
       this.app = p;
@@ -48,5 +49,9 @@ public class makezhongzi {
     // returns true if  mouse clicked is within 16px from the center of image
     // we use 16px because the image is 32px by 32px
     return d < 50; 
+  }
+      public void move(int dx, int dy){
+      x+= dx;
+      y+= dy;
   }
 }

@@ -15,7 +15,7 @@ import processing.core.PImage;
 
 public class mysketch extends PApplet{
     public Person Quyuan,mc;
-    public Person npc1,npc2,npc3;
+    public Person npc1,npc2,npc3,zhongzi;
     public CAT cat;
     //---------------------------------------------
     private Person testblock;
@@ -29,7 +29,7 @@ public class mysketch extends PApplet{
     public boolean talktocat, talktocat2, zhongzistart = false;
     //make zhongzi
     //public makezhongzi leaf,leaf1,date,date1,rice,rice1,zhongzi,yarn;
-    public makezhongzi leaf,date,rice,zhongzi,yarn,bigzhongzi;
+    public makezhongzi leaf,date,rice,yarn,bigzhongzi;
     
     makezhongzi [] build = new makezhongzi[5];
     String [] story = {
@@ -57,6 +57,7 @@ public class mysketch extends PApplet{
         npc2 = new Person(this,500,270,"npc",1,"images/npc2.png");
         npc3 = new Person(this,700,450,"npc",1,"images/npc3.png");
         cat = new CAT(this,632,250,"cat",0,"images/cat.png");
+        zhongzi = new Person(this, 0,0,"zhongzi",2, "images/small zhongzi.png");
         startButton = new Button (this,330,120,"images/startbutton1.png");
         startzhongzi = new Button (this,12,437,"images/startzhongzi.png");
         laterzhongzi = new Button (this,163,437,"images/zhongzilater.png");
@@ -73,7 +74,6 @@ public class mysketch extends PApplet{
         date = new makezhongzi(this, 57, 440, "images/red.png");
         rice = new makezhongzi(this, 25, 25, "images/rice.png");  
         yarn = new makezhongzi(this, 5, 250, "images/yarn.png");
-        zhongzi = new makezhongzi(this, 0,0, "images/small zhongzi.png");
         bigzhongzi = new makezhongzi(this,0,60,"images/bigzhongzi.png");
         
         build[0] = new makezhongzi(this, 25,534, "images/cat.png"); //filler
@@ -221,12 +221,28 @@ public class mysketch extends PApplet{
             npc1.draw();
             npc2.draw();
             npc3.draw();
+            zhongzi.draw();
             
             mcmovement();
             
             npc1.moveTo(648,365);
+            npc2.moveTo(360,220);
+            npc3.moveTo(137,230);
+            if (zhongzi.x >= 250){
+                zhongzi.move(-2, -2);
+            } else if (zhongzi.x >=-100){
+                zhongzi.move(-2, 2);
+            }
+            
             drawCollisions();
-        }           
+            
+            if (zhongzi.x == -100){
+                stageincrease();
+            }
+        }
+        else if (stage == 11){
+            text("The End", 300,400);
+        }
         
         if (showInfo){
             mc.displayInfo(this);
@@ -245,6 +261,7 @@ public class mysketch extends PApplet{
         }
         //System.out.println(stage);
     } //end draw   
+
     
     public void mcmovement(){
         if (keyPressed){
@@ -364,6 +381,8 @@ public class mysketch extends PApplet{
             if (throwzhongzi.isClicked(mouseX, mouseY)){
                 stageincrease();
             }
+            zhongzi.x = 535;
+            zhongzi.y = 310;
         }
         else if (stage == 10){
             catdisplayinfo();
@@ -371,6 +390,7 @@ public class mysketch extends PApplet{
             NPC1displayinfo();
             NPC2displayinfo();
             NPC3displayinfo();
+
         }
     }
     
