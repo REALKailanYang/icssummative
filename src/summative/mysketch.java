@@ -231,14 +231,15 @@ public class mysketch extends PApplet{
             if (zhongzi.x >= 250){
                 zhongzi.move(-2, -2);
             } else if (zhongzi.x >=-100){
-                zhongzi.move(-2, 2);
+                zhongzi.move(-2, 3);
+                            if (zhongzi.y >= 400){
+                stageincrease();
+            }
             }
             
             drawCollisions();
             
-            if (zhongzi.x == -100){
-                stageincrease();
-            }
+
         }
         else if (stage == 11){
             text("The End", 300,400);
